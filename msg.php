@@ -3,17 +3,19 @@ $dsn = 'mysql:dbname=sample; host=localhost';
 $user ='sample';
 $pass='akasan123';    
 try{
+
 $db=new PDO($dsn,$user,$pass);
+//PDOオブジェクト自体に指定。レスポンスは常に連想配列形式で取得するようになる
+$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 $stmt=$db->query('SELECT id,time,name,text,url FROM msgbord ORDER BY time DESC');//SQLの中に動的に値を仕込まない場合はqueryでSQLを発行したほうがシンプルですね
-$results=$stmt->fetchAll(PDO::FETCH_ASSOC);
 $db=null;
 
 }catch(PDOException $e){
 echo $e->getMessage();
 exit;
 }
-if(isset($results)):
-    foreach($results as $result ):?>
+if(isset($stmt)):
+    foreach($stmt as $result ):?>
     <div class='msg'>
         <h2 class="msgtitle">投稿者&nbsp;&nbsp;<?php echo $result['name'];?></h2>
         <p class="postdate"><?php echo $result['time'];?></p>
