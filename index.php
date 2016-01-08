@@ -34,9 +34,7 @@ $stmt->execute(array(
             ':text'=>strip_tags($_POST['text'],'<br>'),//<br>タグだけサニタイジングしない
             ':url'=>$uploaded_file
             ));
-$stmt=$db->prepare('SELECT id,time,name,text,url FROM msgbord');
-$stmt->execute();
-$results=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
 $db=null;
 
 }catch(PDOException $e){
